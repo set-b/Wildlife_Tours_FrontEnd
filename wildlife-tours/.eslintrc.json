@@ -5,25 +5,19 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "airbnb",
-        "prettier",
-        "prettier/react" 
+        "airbnb", //eslint recommended
+        "plugin:prettier/recommended"
     ],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
         },
-        "ecmaVersion": "latest",
+        "ecmaVersion": "latest", //12
         "sourceType": "module"
     },
     "plugins": [
-        "react",
-        "prettier"
+        "react"
     ],
     "rules": {
-        "prettier/prettier": "error",
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-        "react/state-in-constructor": "off"
-    },
-    "parser": "babel-eslint"
+    }
 }
