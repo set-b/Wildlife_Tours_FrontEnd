@@ -23,7 +23,6 @@ function App() {
           backgroundColor: "default",
         }}
       >
-        {/* add a nav bar for scrolling */}
         <Navbar />
         <Router>
           <Routes>
@@ -31,10 +30,10 @@ function App() {
             <Route exact path="/maintenance" element={<Maintenance />} />
           </Routes>
         </Router>
-        <HomePage />
-        <About />
-        <BookATour />
-        <Contact />
+        <HomePage id="Home" />
+        <About id="About" />
+        <BookATour id="Book A Tour" />
+        <Contact id="Contact" />
       </div>
     </ThemeProvider>
   );
