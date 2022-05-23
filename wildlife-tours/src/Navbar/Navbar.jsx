@@ -30,7 +30,7 @@ function Navbar({ refs }) {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <PetsIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -48,6 +48,7 @@ function Navbar({ refs }) {
               color: "inherit",
               textDecoration: "none",
             }}
+            // onClick={() => handleCloseNavMenu("HomePage")}
           >
             Wildlife Tours
           </Typography>
