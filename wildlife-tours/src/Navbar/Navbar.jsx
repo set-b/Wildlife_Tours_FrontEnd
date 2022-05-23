@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,29 +10,24 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import PetsIcon from "@mui/icons-material/Pets";
+import PropTypes from "prop-types";
 
 const pages = ["Book A Tour", "About", "Contact"];
 
-// eslint-disable-next-line no-unused-vars
-const Navbar = React.forwardRef((refs) => {
+function Navbar({ refs }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  // define props and refs; use in handleclosenav by findind with identical name!
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-
-  const handleCloseNavMenu = () => {
+  // useEffect(() => {
+  //   console.log(refs.find((elem) => elem.current.id === "About"));
+  // }, []);
+  const handleCloseNavMenu = (pageName) => {
+    const el = refs.find((element) => element.current.id === pageName);
+    const pagePosition = el.current.getBoundingClientRect();
     setAnchorElNav(null);
-    window.scrollTo({ top: 89, behavior: "smooth" });
+    window.scrollTo({ top: pagePosition.top, behavior: "smooth" });
   };
-
-  //   function getOffset(el) {
-  //     const rect = el.getBoundingClientRect();
-  //     return {
-  //       left: rect.left + window.scrollX,
-  //       top: rect.top + window.scrollY,
-  //     };
-  //   }
 
   return (
     <AppBar position="static">
@@ -89,7 +84,7 @@ const Navbar = React.forwardRef((refs) => {
               {pages.map((page) => (
                 <MenuItem
                   key={page}
-                  onClick={handleCloseNavMenu}
+                  onClick={() => handleCloseNavMenu(page)}
                   textAlign="center"
                 >
                   <Typography>{page}</Typography>
@@ -120,7 +115,7 @@ const Navbar = React.forwardRef((refs) => {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handleCloseNavMenu(page)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page}
@@ -131,5 +126,10 @@ const Navbar = React.forwardRef((refs) => {
       </Container>
     </AppBar>
   );
-});
+}
+
+Navbar.propTypes = {
+  refs: PropTypes.shape([]).isRequired,
+};
+
 export default Navbar;

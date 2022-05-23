@@ -15,7 +15,7 @@ function App() {
   const bookRef = useRef();
   const contactRef = useRef();
   const refArray = [homeRef, aboutRef, bookRef, contactRef];
-  console.log(refArray);
+  // console.log(refArray);
   const darkTheme = createTheme({
     palette: {
       mode: "dark",
