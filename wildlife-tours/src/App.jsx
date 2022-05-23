@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import HomePage from "./pages/HomePage/HomePage";
@@ -10,11 +10,18 @@ import Navbar from "./Navbar/Navbar";
 import "./App.css";
 
 function App() {
+  const homeRef = useRef();
+  const aboutRef = useRef();
+  const bookRef = useRef();
+  const contactRef = useRef();
+  const refArray = [homeRef, aboutRef, bookRef, contactRef];
+  console.log(refArray);
   const darkTheme = createTheme({
     palette: {
       mode: "dark",
     },
   });
+  // wrap in divs, forward to navbar as props
   return (
     <ThemeProvider theme={darkTheme}>
       <div
@@ -23,17 +30,25 @@ function App() {
           backgroundColor: "default",
         }}
       >
-        <Navbar />
+        <Navbar refs={refArray} />
         <Router>
           <Routes>
             {/* maintenance will check jwt for employee or admin roles, element will be maintenance page */}
             <Route exact path="/maintenance" element={<Maintenance />} />
           </Routes>
         </Router>
-        <HomePage id="Home" />
-        <About id="About" />
-        <BookATour id="Book A Tour" />
-        <Contact id="Contact" />
+        <div id="HomePage" ref={homeRef}>
+          <HomePage />
+        </div>
+        <div id="About" ref={aboutRef}>
+          <About />
+        </div>
+        <div id="Book A Tour" ref={bookRef}>
+          <BookATour />
+        </div>
+        <div id="Contact" ref={contactRef}>
+          <Contact />
+        </div>
       </div>
     </ThemeProvider>
   );

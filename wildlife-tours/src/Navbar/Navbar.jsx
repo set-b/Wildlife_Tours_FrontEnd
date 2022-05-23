@@ -13,18 +13,17 @@ import PetsIcon from "@mui/icons-material/Pets";
 
 const pages = ["Book A Tour", "About", "Contact"];
 
-function Navbar() {
+// eslint-disable-next-line no-unused-vars
+const Navbar = React.forwardRef((refs) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-
+  // define props and refs; use in handleclosenav by findind with identical name!
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
-    // Try useRef?
-    // const rect = document.getElementById(pageName).getBoundingClientRect();
     setAnchorElNav(null);
-    window.scrollTo({ top: 89, behavior: "smooth" }); // make this scroll to the right place; make navbar sticky
+    window.scrollTo({ top: 89, behavior: "smooth" });
   };
 
   //   function getOffset(el) {
@@ -132,5 +131,5 @@ function Navbar() {
       </Container>
     </AppBar>
   );
-}
+});
 export default Navbar;
