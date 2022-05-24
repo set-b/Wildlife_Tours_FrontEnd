@@ -19,20 +19,9 @@ function Navbar({ refs }) {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  // useEffect(() => {
-  //   console.log(refs.find((elem) => elem.current.id === "About"));
-  // }, []);
   const handleCloseNavMenu = (pageName) => {
-    // scrolling only works on first click, because all buttons return home on second click!
     const el = refs.find((element) => element.current.id === pageName);
-    // const pagePosition = el.current.getBoundingClientRect();
     setAnchorElNav(null);
-    // window.scrollTo({
-    //   top: pagePosition.top,
-    //   left: pagePosition.bottom,
-    //   behavior: "smooth",
-    // });
-    // window.scrollY + pagePosition.top;
     el.current.scrollIntoView();
   };
 
@@ -83,7 +72,7 @@ function Navbar({ refs }) {
                 horizontal: "left",
               }}
               open={Boolean(anchorElNav)}
-              // onClose={handleCloseNavMenu} do I need this??
+              onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
               }}
