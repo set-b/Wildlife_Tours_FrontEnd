@@ -1,7 +1,5 @@
 .App {
   text-align: center;
-  overflow-x:none
-
 }
 
 .App-logo {
@@ -26,6 +24,23 @@
   color: white;
 }
 
+::-webkit-scrollbar{
+  width: 18px;
+}
+
+
+::-webkit-scrollbar-track{
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb{
+  background-image: linear-gradient(rgb(68, 67, 67), rgb(65, 64, 64));
+  border-radius: 25px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background-image: linear-gradient(grey, white);
+}
 .App > div {
   width: 100vw;
   min-height: 100vh;
