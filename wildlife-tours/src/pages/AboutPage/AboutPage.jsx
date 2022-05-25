@@ -1,69 +1,28 @@
-// import React from "react";
-// import pic from "../../assets/smiling.jpg";
-
-// function AboutPage() {
-//   return (
-//     <div style={{ position: "relative", top: "80px" }}>
-//       <img
-//         src={pic}
-//         alt=""
-//         style={{
-//           position: "relative",
-//           float: "left",
-//           width: "40%",
-//           height: "auto",
-//           padding: "0 10px 0 0",
-//         }}
-//       />
-//       <h1>About Us</h1>
-//       <p style={{ fontSize: "24px", textAlign: "justify", margin: "10px" }}>
-//         Wildlife Tours is a full-stack application based on a fictitious company
-//         created by Brandyn Tse. The front-end has been developed using React js
-//         framework and the material UI library. Assets have been compiled from
-//         royalty-free images and video. The video above was edited by me using
-//         OpenShot, an open-source editor. For a demonstration of
-//         crud-functionality, as well as authentication/authorization, feel free
-//         to use the search and management functions found at the &quot;Book A
-//         Tour&quot; section. More of my github projects may also be found{" "}
-//         <a
-//           href="https://github.com/battafurai-gunmetaru"
-//           style={{ color: "#33ccff", textDecoration: "none" }}
-//         >
-//           {" "}
-//           here
-//         </a>
-//         . If you are interested in contacting me, please refer to the form under
-//         the &quot;Contact&quot; section, or connect with me through{" "}
-//         <a
-//           href="https://www.linkedin.com/in/brandyn-tse-085872166"
-//           style={{ color: "#33ccff", textDecoration: "none" }}
-//         >
-//           {" "}
-//           linkedIn
-//         </a>
-//         . Thank you!{" "}
-//       </p>
-//     </div>
-//   );
-// }
-
-// export default AboutPage;
-
 import * as React from "react";
-import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-// import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import pic from "../../assets/smiling.jpg";
-// use card for linkedin and github!
-// import CardComponent from "../../card/Card";
+import gitHubLogo from "../../assets/github.jpeg";
+import linkedInLogo from "../../assets/linkedin.jpeg";
+import CardComponent from "../../card/Card";
 
-// eslint-disable-next-line no-unused-vars
-function AboutPage(props) {
-  // const { post } = props;
-
+function AboutPage() {
+  const gitHubPost = {
+    description: "Check out more of my projects",
+    link: "https://github.com/battafurai-gunmetaru",
+    image: gitHubLogo,
+    imageLabel: "git hub logo",
+    title: "Git Hub Repository",
+  };
+  const linkedInPost = {
+    description: "Connect with me on LinkedIn",
+    link: "https://www.linkedin.com/in/brandyn-tse-085872166",
+    image: linkedInLogo,
+    imageLabel: "linkedin logo",
+    title: "LinkedIn",
+  };
   return (
     <div style={{ position: "relative", top: "80px" }}>
       <Paper
@@ -72,6 +31,7 @@ function AboutPage(props) {
           backgroundColor: "grey.800",
           color: "#fff",
           mb: 4,
+          // backgroundSize: "cover",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
@@ -112,7 +72,7 @@ function AboutPage(props) {
                 company created by Brandyn Tse. The front-end has been developed
                 using React js framework and the material UI library. Assets
                 have been compiled from royalty-free images and video. The video
-                above was edited by me using OpenShot, an open-source editor.
+                above was edited using OpenShot, an open-source editor.
               </Typography>
               {/* <Link variant="subtitle1" href={pic}>
                 example
@@ -121,18 +81,12 @@ function AboutPage(props) {
           </Grid>
         </Grid>
       </Paper>
+      <Grid container spacing={4}>
+        <CardComponent post={gitHubPost} />
+        <CardComponent post={linkedInPost} />
+      </Grid>
     </div>
   );
 }
-
-AboutPage.propTypes = {
-  post: PropTypes.shape({
-    description: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    imageText: PropTypes.string.isRequired,
-    linkText: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-  }).isRequired,
-};
 
 export default AboutPage;
