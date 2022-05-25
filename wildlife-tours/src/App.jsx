@@ -39,7 +39,11 @@ function App() {
             <Route exact path="/maintenance" element={<Maintenance />} />
           </Routes>
         </Router>
-        <div id="HomePage" ref={homeRef}>
+        <div
+          id="HomePage"
+          ref={homeRef}
+          style={{ position: "relative", top: "-20px" }}
+        >
           <HomePage />
         </div>
         <div id="About" ref={aboutRef}>

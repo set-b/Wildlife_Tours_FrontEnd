@@ -10,7 +10,12 @@ function HomePage() {
         autoPlay
         loop
         muted
-        style={{ objectFit: "contain", width: "80%", height: "auto" }}
+        style={{
+          objectFit: "contain",
+          width: "80%",
+          height: "auto",
+          // top: "15px",
+        }}
       />
     </div>
   );
