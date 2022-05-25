@@ -3,6 +3,7 @@ import videoBg from "../../assets/wildlifefinal.mp4";
 
 function HomePage() {
   return (
+    // eslint-disable-next-line jsx-a11y/no-autofocus
     <div>
       <video
         src={videoBg}

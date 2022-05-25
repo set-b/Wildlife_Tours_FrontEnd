@@ -44,7 +44,7 @@ function App() {
           ref={homeRef}
           style={{ position: "relative", top: "-20px" }}
         >
-          <HomePage />
+          <HomePage target="topOfPage" />
         </div>
         <div id="About" ref={aboutRef}>
           <About />
