@@ -23,7 +23,7 @@ function App() {
     },
   });
   // wrap in divs, forward to navbar as props
-  // page zoom to 125% on load??
+  // page zoom to 125% on load, or MAKE EVERYTHING 25% LARGER
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />

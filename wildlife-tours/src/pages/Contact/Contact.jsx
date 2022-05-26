@@ -97,7 +97,7 @@ export default function Contact() {
                   multiline
                   rows={8}
                   name="message"
-                  label="message"
+                  label="Message"
                   type="message"
                   id="message"
                 />
