@@ -2,6 +2,7 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import SearchBar from "../../search bar/SearchBar";
 import Tour from "../../tour/Tour";
+import Experiment from "../../tour/Experiment";
 // will include search function for tours
 // tour cards
 // searching by tour code
@@ -17,6 +18,7 @@ function BookATour() {
         FIND YOUR NEXT ADVENTURE
       </Typography>
       <SearchBar />
+      <Experiment />
       <Tour />
     </div>
   );
