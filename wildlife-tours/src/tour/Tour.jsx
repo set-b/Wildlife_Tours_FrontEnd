@@ -42,6 +42,10 @@ export default function SpacingGrid() {
                     height="200"
                     image="https://a-z-animals.com/media/2021/05/Favorite-and-Most-Popular-Animals_-Lion.jpg"
                     alt="lion"
+                    sx={{
+                      transformStyle: "preserve-3d",
+                      transform: "translateZ(60px)",
+                    }}
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
