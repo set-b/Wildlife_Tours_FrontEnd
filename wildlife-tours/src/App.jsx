@@ -9,8 +9,12 @@ import Contact from "./pages/Contact/Contact";
 import Maintenance from "./pages/Maintenance/Maintenance";
 import Navbar from "./Navbar/Navbar";
 import "./App.css";
+import { sendHttpRequest } from "./utils/httpHelper";
 
 function App() {
+  sendHttpRequest("GET", "tours").then((response) =>
+    console.log(response.json())
+  );
   const homeRef = useRef();
   const aboutRef = useRef();
   const bookRef = useRef();
