@@ -8,12 +8,38 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Tilt from "react-vanilla-tilt";
 import HoverVideoPlayer from "react-hover-video-player";
-import Video from "../assets/wildlifefinal.mp4";
+// import Video from "../assets/wildlifefinal.mp4";
 import Constants from "../constants/Constants";
 
 export default function SpacingGrid() {
   const [tourData, setTourData] = useState([]);
   const [tourNumberArray, setTourNumberArray] = useState([]);
+
+  const videoLinks = [
+    { location: "Asia", link: "https://www.youtube.com/watch?v=cwsdTKoGv5U" },
+    { location: "Africa", link: "https://www.youtube.com/watch?v=6yXuCf5tBlg" },
+    {
+      location: "South America",
+      link: "https://www.youtube.com/watch?v=d649GL3FKaU",
+    },
+    {
+      location: "Pacific Ocean",
+      link: "https://www.youtube.com/watch?v=lBWZ9ls9-Oc",
+    },
+    {
+      location: "North America",
+      link: "https://www.youtube.com/watch?v=wUhMIn1UO7Q",
+    },
+  ];
+
+  sessionStorage.setItem("videos", videoLinks);
+
+  const videoByTourLocation = (location) => {
+    const video = videoLinks.filter((vid) => vid.location === location); // this filter is probably wrong
+    console.log(location);
+    console.log(videoLinks[0].location);
+    return video.link;
+  };
 
   // make a switch case for tourData value.location, returning youtube links for autoplay
 
@@ -40,10 +66,9 @@ export default function SpacingGrid() {
     };
     renderTours();
   }, []);
-  // make each card have uniform height and width, with buttons in the same place as before
+  console.log(videoByTourLocation("Africa"));
   return (
     <div>
-      {/* <h1>{JSON.stringify(tourData)}</h1> */}
       {tourNumberArray.length > 0 && (
         <Grid sx={{ flexGrow: 1 }} container spacing={7}>
           <Grid item xs={12} elevation={3}>
@@ -71,7 +96,7 @@ export default function SpacingGrid() {
                         }}
                       >
                         <HoverVideoPlayer
-                          videoSrc={Video}
+                          videoSrc={sessionStorage.getItem("videos")[0]}
                           // video returned through youtube link with value.location as param
                           muted
                           loop
