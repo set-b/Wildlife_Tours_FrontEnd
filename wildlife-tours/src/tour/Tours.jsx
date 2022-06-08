@@ -9,16 +9,13 @@ import Typography from "@mui/material/Typography";
 import Tilt from "react-vanilla-tilt";
 import HoverVideoPlayer from "react-hover-video-player";
 import Video from "../assets/wildlifefinal.mp4";
-// import { sendHttpRequest } from "../utils/httpHelper";
 import Constants from "../constants/Constants";
 
 export default function SpacingGrid() {
   const [tourData, setTourData] = useState([]);
   const [tourNumberArray, setTourNumberArray] = useState([]);
 
-  // fetch(`${Constants.HEROKU_ENDPOINT_POSTGRESQL}tours`, { mode: "cors" }).then(
-  //   (response) => console.log(response.json())
-  // );
+  // make a switch case for tourData value.location, returning youtube links for autoplay
 
   useEffect(() => {
     let numberOfTours = 0;
@@ -43,9 +40,10 @@ export default function SpacingGrid() {
     };
     renderTours();
   }, []);
+  // make each card have uniform height and width, with buttons in the same place as before
   return (
     <div>
-      <h1>{JSON.stringify(tourData)}</h1>
+      {/* <h1>{JSON.stringify(tourData)}</h1> */}
       {tourNumberArray.length > 0 && (
         <Grid sx={{ flexGrow: 1 }} container spacing={7}>
           <Grid item xs={12} elevation={3}>
@@ -57,6 +55,7 @@ export default function SpacingGrid() {
                       elevation={5}
                       sx={{
                         maxWidth: 300,
+                        height: "400px",
                         cursor: "pointer",
                         "&:hover": {
                           transform: "scale(1.1)",
@@ -73,7 +72,7 @@ export default function SpacingGrid() {
                       >
                         <HoverVideoPlayer
                           videoSrc={Video}
-                          // playing={playing}
+                          // video returned through youtube link with value.location as param
                           muted
                           loop
                           style={{
@@ -85,7 +84,7 @@ export default function SpacingGrid() {
                       </CardMedia>
                       <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
-                          lorem ipsum
+                          {tourData[value].title}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                           {tourData[value].description}
@@ -93,7 +92,7 @@ export default function SpacingGrid() {
                       </CardContent>
                       <CardActions>
                         <Button size="small">Share</Button>
-                        <Button size="small">Learn More</Button>
+                        <Button size="small">More Info</Button>
                       </CardActions>
                     </Card>
                   </Tilt>
