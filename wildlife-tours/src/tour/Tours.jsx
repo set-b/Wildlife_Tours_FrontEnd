@@ -91,8 +91,22 @@ export default function SpacingGrid() {
                         </Typography>
                       </CardContent>
                       <CardActions>
-                        <Button size="small">Share</Button>
-                        <Button size="small">More Info</Button>
+                        <Button
+                          size="small"
+                          sx={{ position: "absolute", bottom: "20px" }}
+                        >
+                          Share
+                        </Button>
+                        <Button
+                          size="small"
+                          sx={{
+                            position: "absolute",
+                            bottom: "20px",
+                            right: "110px",
+                          }}
+                        >
+                          More Info
+                        </Button>
                       </CardActions>
                     </Card>
                   </Tilt>
