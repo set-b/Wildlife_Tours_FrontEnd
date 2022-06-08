@@ -13,94 +13,96 @@ import Video from "../assets/wildlifefinal.mp4";
 import Constants from "../constants/Constants";
 
 export default function SpacingGrid() {
-  // console.log(sendHttpRequest("GET", "/tours"));
   const [tourData, setTourData] = useState([]);
-  // eslint-disable-next-line no-unused-vars
-  const [isFetching, setIsFetching] = useState(true);
-  console.log(tourData); // this is an array of objects, which react js mistakes as key value pairs, or an intermediate value.
+  const [tourNumberArray, setTourNumberArray] = useState([]);
 
-  // const numberOfTourCards = Array.from(tourData.length.keys());
+  // fetch(`${Constants.HEROKU_ENDPOINT_POSTGRESQL}tours`, { mode: "cors" }).then(
+  //   (response) => console.log(response.json())
+  // );
 
-  fetch(`${Constants.HEROKU_ENDPOINT_POSTGRESQL}tours`, { mode: "cors" }).then(
-    (response) => console.log(response.json()) // this is a get request to tours.
-  );
-
-  const renderTours = async () => {
-    try {
+  useEffect(() => {
+    let numberOfTours = 0;
+    const renderTours = async () => {
       await fetch(`${Constants.HEROKU_ENDPOINT_POSTGRESQL}tours`, {
         mode: "cors",
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Oops! Something went wrong!");
+        })
         .then((responseData) => {
           setTourData(responseData);
-          setIsFetching(false);
           console.log(responseData);
+          numberOfTours = responseData.length;
+          const numberArray = Array.from(Array(numberOfTours).keys());
+          setTourNumberArray(numberArray);
         })
         .catch((error) => console.log(error));
-      // setTourData(response.json());
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
+    };
     renderTours();
   }, []);
   return (
-    <Grid sx={{ flexGrow: 1 }} container spacing={7}>
-      <Grid item xs={12} elevation={3}>
-        <Grid container justifyContent="center" spacing={2}>
-          {[0, 1].map((value) => (
-            <Grid key={value.id} item>
-              <Tilt style={{}}>
-                <Card
-                  elevation={5}
-                  sx={{
-                    maxWidth: 300,
-                    cursor: "pointer",
-                    "&:hover": {
-                      transform: "scale(1.1)",
-                      transition: "transform 330ms ease-in-out",
-                    },
-                  }}
-                >
-                  <CardMedia
-                    height="200"
-                    sx={{
-                      transformStyle: "preserve-3d",
-                      transform: "translateZ(60px)",
-                    }}
-                  >
-                    <HoverVideoPlayer
-                      videoSrc={Video}
-                      // playing={playing}
-                      muted
-                      loop
-                      style={{
-                        display: "block",
-                        maxWidth: "100%",
-                        height: "auto",
+    <div>
+      <h1>{JSON.stringify(tourData)}</h1>
+      {tourNumberArray.length > 0 && (
+        <Grid sx={{ flexGrow: 1 }} container spacing={7}>
+          <Grid item xs={12} elevation={3}>
+            <Grid container justifyContent="center" spacing={2}>
+              {tourNumberArray.map((value) => (
+                <Grid key={value} item>
+                  <Tilt style={{}}>
+                    <Card
+                      elevation={5}
+                      sx={{
+                        maxWidth: 300,
+                        cursor: "pointer",
+                        "&:hover": {
+                          transform: "scale(1.1)",
+                          transition: "transform 330ms ease-in-out",
+                        },
                       }}
-                    />
-                  </CardMedia>
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      lorem ipsum
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {value.description}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">Share</Button>
-                    <Button size="small">Learn More</Button>
-                  </CardActions>
-                </Card>
-              </Tilt>
+                    >
+                      <CardMedia
+                        height="200"
+                        sx={{
+                          transformStyle: "preserve-3d",
+                          transform: "translateZ(60px)",
+                        }}
+                      >
+                        <HoverVideoPlayer
+                          videoSrc={Video}
+                          // playing={playing}
+                          muted
+                          loop
+                          style={{
+                            display: "block",
+                            maxWidth: "100%",
+                            height: "auto",
+                          }}
+                        />
+                      </CardMedia>
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                          lorem ipsum
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {tourData[value].description}
+                        </Typography>
+                      </CardContent>
+                      <CardActions>
+                        <Button size="small">Share</Button>
+                        <Button size="small">Learn More</Button>
+                      </CardActions>
+                    </Card>
+                  </Tilt>
+                </Grid>
+              ))}
             </Grid>
-          ))}
+          </Grid>
         </Grid>
-      </Grid>
-    </Grid>
+      )}
+    </div>
   );
 }
