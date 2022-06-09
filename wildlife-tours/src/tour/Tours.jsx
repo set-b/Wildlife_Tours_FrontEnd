@@ -17,24 +17,24 @@ export default function SpacingGrid() {
   const videoLinks = [
     {
       location: "Asia",
-      link: "https://yewtu.be/embed/XvDRrSBBPc8",
+      link: "https://www.youtube.com/embed/XvDRrSBBPc8?autoplay=1&mute=1&controls=0",
       // link: "https://www.googleapis.com/youtube/v3/videos?part=player&id=cwsdTKoGv5U&key=AIzaSyCtb6WBYg7ztxHPQ4hCwE09s4HCJXU_fvU",
     },
     {
       location: "Africa",
-      link: "https://yewtu.be/embed/6yXuCf5tBlg",
+      link: "https://www.youtube.com/embed/6yXuCf5tBlg?autoplay=1&mute=1&controls=0",
     },
     {
       location: "South America",
-      link: "https://yewtu.be/embed/d649GL3FKaU",
+      link: "https://www.youtube.com/embed/d649GL3FKaU?autoplay=1&mute=1&controls=0",
     },
     {
       location: "Pacific Ocean",
-      link: "https://yewtu.be/embed/lBWZ9ls9-Oc",
+      link: "https://www.youtube.com/embed/lBWZ9ls9-Oc?autoplay=1&mute=1&controls=0",
     },
     {
       location: "North America",
-      link: "https://yewtu.be/embed/wUhMIn1UO7Q",
+      link: "https://www.youtube.com/embed/wUhMIn1UO7Q?autoplay=1&mute=1&controls=0",
     },
   ];
 
@@ -120,9 +120,10 @@ export default function SpacingGrid() {
                         <iframe
                           title={value.title}
                           src={videoByTourLocation(tourData[value].location)}
-                          allow="autoplay; encrypted-media"
+                          allow="autoplay"
+                          frameBorder="0"
                           loop
-                          muted
+                          mute="1"
                           style={{
                             display: "block",
                             maxWidth: "100%",
