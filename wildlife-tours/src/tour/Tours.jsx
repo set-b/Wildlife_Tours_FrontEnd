@@ -117,6 +117,19 @@ export default function SpacingGrid() {
                             height: "auto",
                           }}
                         /> */}
+                        {/* <div> */}
+                        <header
+                          style={{
+                            position: "absolute",
+                            width: "100%",
+                            height: "18%",
+                            background: "black",
+                            color: "black",
+                            top: 0,
+                          }}
+                        >
+                          Text
+                        </header>
                         <iframe
                           title={value.title}
                           src={videoByTourLocation(tourData[value].location)}
@@ -124,12 +137,22 @@ export default function SpacingGrid() {
                           frameBorder="0"
                           loop
                           mute="1"
-                          style={{
-                            display: "block",
-                            maxWidth: "100%",
-                            height: "auto",
-                          }}
+                          width="auto"
+                          height="300"
                         />
+                        <footer
+                          style={{
+                            position: "absolute",
+                            width: "100%",
+                            height: "18%",
+                            background: "black",
+                            bottom: 0,
+                            color: "black",
+                          }}
+                        >
+                          Text
+                        </footer>
+                        {/* </div> */}
                       </CardMedia>
                       <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
