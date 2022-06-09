@@ -7,8 +7,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Tilt from "react-vanilla-tilt";
-import HoverVideoPlayer from "react-hover-video-player";
-// import Video from "../assets/wildlifefinal.mp4";
+// import HoverVideoPlayer from "react-hover-video-player";
 import Constants from "../constants/Constants";
 
 export default function SpacingGrid() {
@@ -16,19 +15,26 @@ export default function SpacingGrid() {
   const [tourNumberArray, setTourNumberArray] = useState([]);
 
   const videoLinks = [
-    { location: "Asia", link: "https://www.youtube.com/watch?v=cwsdTKoGv5U" },
-    { location: "Africa", link: "https://www.youtube.com/watch?v=6yXuCf5tBlg" },
+    {
+      location: "Asia",
+      link: "https://yewtu.be/embed/XvDRrSBBPc8",
+      // link: "https://www.googleapis.com/youtube/v3/videos?part=player&id=cwsdTKoGv5U&key=AIzaSyCtb6WBYg7ztxHPQ4hCwE09s4HCJXU_fvU",
+    },
+    {
+      location: "Africa",
+      link: "https://yewtu.be/embed/6yXuCf5tBlg",
+    },
     {
       location: "South America",
-      link: "https://www.youtube.com/watch?v=d649GL3FKaU",
+      link: "https://yewtu.be/embed/d649GL3FKaU",
     },
     {
       location: "Pacific Ocean",
-      link: "https://www.youtube.com/watch?v=lBWZ9ls9-Oc",
+      link: "https://yewtu.be/embed/lBWZ9ls9-Oc",
     },
     {
       location: "North America",
-      link: "https://www.youtube.com/watch?v=wUhMIn1UO7Q",
+      link: "https://yewtu.be/embed/wUhMIn1UO7Q",
     },
   ];
 
@@ -36,9 +42,10 @@ export default function SpacingGrid() {
 
   const videoByTourLocation = (location) => {
     const video = videoLinks.filter((vid) => vid.location === location); // this filter is probably wrong
-    console.log(location);
-    console.log(videoLinks[0].location);
-    return video.link;
+    // console.log(location);
+    // console.log(videoLinks[0].location);
+    console.log(video[0].link);
+    return video[0].link;
   };
 
   // make a switch case for tourData value.location, returning youtube links for autoplay
@@ -66,7 +73,8 @@ export default function SpacingGrid() {
     };
     renderTours();
   }, []);
-  console.log(videoByTourLocation("Africa"));
+  // console.log(videoByTourLocation(tourData[0].location));
+  // console.log(videoByTourLocation("Africa"));
   return (
     <div>
       {tourNumberArray.length > 0 && (
@@ -95,11 +103,26 @@ export default function SpacingGrid() {
                           transform: "translateZ(60px)",
                         }}
                       >
-                        <HoverVideoPlayer
-                          videoSrc={sessionStorage.getItem("videos")[0]}
+                        {/* <HoverVideoPlayer
+                          videoSrc={videoByTourLocation(
+                            tourData[value].location
+                          )}
+                          crossOrigin
                           // video returned through youtube link with value.location as param
                           muted
                           loop
+                          style={{
+                            display: "block",
+                            maxWidth: "100%",
+                            height: "auto",
+                          }}
+                        /> */}
+                        <iframe
+                          title={value.title}
+                          src={videoByTourLocation(tourData[value].location)}
+                          allow="autoplay; encrypted-media"
+                          loop
+                          muted
                           style={{
                             display: "block",
                             maxWidth: "100%",
