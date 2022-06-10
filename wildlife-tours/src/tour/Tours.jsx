@@ -7,12 +7,13 @@ import CardMedia from "@mui/material/CardMedia";
 // import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Tilt from "react-vanilla-tilt";
-// import HoverVideoPlayer from "react-hover-video-player";
+import ReactPlayer from "react-player";
 import Constants from "../constants/Constants";
 
 export default function SpacingGrid() {
   const [tourData, setTourData] = useState([]);
   const [tourNumberArray, setTourNumberArray] = useState([]);
+  // state collection of isPlaying for each video
 
   const videoLinks = [
     {
@@ -38,6 +39,11 @@ export default function SpacingGrid() {
     },
   ];
 
+  // make state for each video; can I automatically generate this?
+
+  // for loop to create a state with a default value of a collection populated with a number of objects each containing property isPlaying, with number equal to size
+  // of tourData fetched from renderTours. This will probably be used in useEffect
+
   sessionStorage.setItem("videos", videoLinks);
 
   const videoByTourLocation = (location) => {
@@ -48,16 +54,15 @@ export default function SpacingGrid() {
     return video[0].link;
   };
 
-  const play = (value) => {
-    console.log("playing");
-    document.getElementById(value).click();
+  const togglePlay = (value) => {
+    // setIsPlaying(true);
+    videoLinks[value].isPlaying = true;
   };
 
-  const stop = (value) => {
-    console.log("stopping");
-    document.getElementById(value).click();
+  const togglePause = (value) => {
+    // setIsPlaying(false);
+    videoLinks[value].isPlaying = false;
   };
-  // make a switch case for tourData value.location, returning youtube links for autoplay
 
   useEffect(() => {
     let numberOfTours = 0;
@@ -77,13 +82,13 @@ export default function SpacingGrid() {
           numberOfTours = responseData.length;
           const numberArray = Array.from(Array(numberOfTours).keys());
           setTourNumberArray(numberArray);
+          // generate number of objects equal to numberOfTours, each containing property
+          // store in state collection
         })
         .catch((error) => console.log(error));
     };
     renderTours();
   }, []);
-  // console.log(videoByTourLocation(tourData[0].location));
-  // console.log(videoByTourLocation("Africa"));
   return (
     <div>
       {tourNumberArray.length > 0 && (
@@ -104,6 +109,8 @@ export default function SpacingGrid() {
                           transition: "transform 330ms ease-in-out",
                         },
                       }}
+                      onMouseEnter={() => togglePlay(value)}
+                      onMouseLeave={() => togglePause(value)}
                     >
                       <CardMedia
                         height="200"
@@ -124,7 +131,7 @@ export default function SpacingGrid() {
                         >
                           Text
                         </header>
-                        <iframe
+                        {/* <iframe
                           title={value.title}
                           src={videoByTourLocation(tourData[value].location)}
                           // allow="autoplay"
@@ -137,6 +144,14 @@ export default function SpacingGrid() {
                           id={value.title}
                           onMouseEnter={() => play(value)}
                           onMouseLeave={() => stop(value)}
+                        /> */}
+                        <ReactPlayer
+                          url={videoByTourLocation(tourData[value].location)}
+                          playing={videoLinks[value].isPlaying}
+                          volume="0"
+                          muted
+                          width="auto"
+                          height="300px"
                         />
                         <footer
                           style={{
