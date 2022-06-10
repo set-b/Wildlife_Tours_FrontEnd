@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Tilt from "react-vanilla-tilt";
 // import HoverVideoPlayer from "react-hover-video-player";
@@ -17,7 +17,7 @@ export default function SpacingGrid() {
   const videoLinks = [
     {
       location: "Asia",
-      link: "https://www.youtube.com/embed/XvDRrSBBPc8?autoplay=1&mute=1&controls=0",
+      link: "https://www.youtube.com/embed/XvDRrSBBPc8?&mute=1&controls=0",
       // link: "https://www.googleapis.com/youtube/v3/videos?part=player&id=cwsdTKoGv5U&key=AIzaSyCtb6WBYg7ztxHPQ4hCwE09s4HCJXU_fvU",
     },
     {
@@ -48,6 +48,15 @@ export default function SpacingGrid() {
     return video[0].link;
   };
 
+  const play = (value) => {
+    console.log("playing");
+    document.getElementById(value).click();
+  };
+
+  const stop = (value) => {
+    console.log("stopping");
+    document.getElementById(value).click();
+  };
   // make a switch case for tourData value.location, returning youtube links for autoplay
 
   useEffect(() => {
@@ -103,21 +112,6 @@ export default function SpacingGrid() {
                           transform: "translateZ(60px)",
                         }}
                       >
-                        {/* <HoverVideoPlayer
-                          videoSrc={videoByTourLocation(
-                            tourData[value].location
-                          )}
-                          crossOrigin
-                          // video returned through youtube link with value.location as param
-                          muted
-                          loop
-                          style={{
-                            display: "block",
-                            maxWidth: "100%",
-                            height: "auto",
-                          }}
-                        /> */}
-                        {/* <div> */}
                         <header
                           style={{
                             position: "absolute",
@@ -133,12 +127,16 @@ export default function SpacingGrid() {
                         <iframe
                           title={value.title}
                           src={videoByTourLocation(tourData[value].location)}
-                          allow="autoplay"
+                          // allow="autoplay"
+                          // autoplay={isPlaying}
                           frameBorder="0"
                           loop
                           mute="1"
                           width="auto"
                           height="300"
+                          id={value.title}
+                          onMouseEnter={() => play(value)}
+                          onMouseLeave={() => stop(value)}
                         />
                         <footer
                           style={{
@@ -152,24 +150,23 @@ export default function SpacingGrid() {
                         >
                           Text
                         </footer>
-                        {/* </div> */}
                       </CardMedia>
                       <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
                           {tourData[value].title}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
+                        {/* <Typography variant="body2" color="text.secondary">
                           {tourData[value].description}
-                        </Typography>
+                        </Typography> */}
                       </CardContent>
                       <CardActions>
-                        <Button
+                        {/* <Button
                           size="small"
                           sx={{ position: "absolute", bottom: "20px" }}
                         >
                           Share
-                        </Button>
-                        <Button
+                        </Button> */}
+                        {/* <Button
                           size="small"
                           sx={{
                             position: "absolute",
@@ -178,7 +175,7 @@ export default function SpacingGrid() {
                           }}
                         >
                           More Info
-                        </Button>
+                        </Button> */}
                       </CardActions>
                     </Card>
                   </Tilt>
