@@ -13,6 +13,8 @@ import FavoriteBorderSharpIcon from "@mui/icons-material/FavoriteBorderSharp";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Tooltip from "@mui/material/Tooltip";
 import Constants from "../constants/Constants";
+// import { Pagination } from "@mui/material";
+import AppPagination from "../pagination/index";
 
 export default function SpacingGrid() {
   const [tourData, setTourData] = useState([]);
@@ -105,6 +107,7 @@ export default function SpacingGrid() {
   }, []);
   return (
     <div style={{ position: "relative", top: "-350px" }}>
+      <AppPagination />
       {tourNumberArray.length > 0 && (
         <Grid sx={{ flexGrow: 1 }} container spacing={7}>
           <Grid item xs={12} elevation={3}>
