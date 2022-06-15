@@ -21,7 +21,7 @@ export default function SpacingGrid() {
   const videoLinks = [
     {
       location: "Asia",
-      link: "https://www.youtube.com/embed/XvDRrSBBPc8?&mute=1&controls=0",
+      link: "https://www.youtube.com/embed/cwsdTKoGv5U?autoplay=1&mute=1&controls=0",
     },
     {
       location: "Africa",
@@ -41,8 +41,7 @@ export default function SpacingGrid() {
     },
   ];
 
-  // make state for each video; can I automatically generate this?
-  sessionStorage.setItem("videos", videoLinks);
+  sessionStorage.setItem("videos", videoLinks); // probably get rid of this
 
   const videoByTourLocation = (location) => {
     const video = videoLinks.filter((vid) => vid.location === location); // this filter is probably wrong
@@ -58,17 +57,14 @@ export default function SpacingGrid() {
   const togglePause = (value) => {
     setPlayObjects([...playObjects, (playObjects[value].isPlaying = false)]);
     console.log(playObjects[value].isPlaying);
-    // setPlayObjects((playObjects[value].isPlaying = false));
   };
 
   const createVideoPlayingObjects = (number) => {
-    // eslint-disable-next-line prefer-const
     playObjects.length = number;
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < number; i++) {
       const playObject = { isPlaying: false };
       playObjects[i] = playObject;
-      // setPlayObjects([...playObjects, playObject]);
     }
     console.log(playObjects);
     console.log(playObjects[0].isPlaying);
@@ -93,8 +89,6 @@ export default function SpacingGrid() {
           numberOfTours = responseData.length;
           const numberArray = Array.from(Array(numberOfTours).keys());
           setTourNumberArray(numberArray);
-          // generate number of objects equal to numberOfTours, each containing property
-          // store in state collection
           createVideoPlayingObjects(numberOfTours);
         })
         .catch((error) => console.log(error));
@@ -113,7 +107,8 @@ export default function SpacingGrid() {
                     <Card
                       elevation={5}
                       sx={{
-                        maxWidth: 300,
+                        maxWidth: 500,
+                        width: 400,
                         height: "400px",
                         cursor: "pointer",
                         "&:hover": {
@@ -168,9 +163,9 @@ export default function SpacingGrid() {
                         <Typography gutterBottom variant="h5" component="div">
                           {tourData[value].title}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
+                        {/* <Typography variant="body2" color="text.secondary">
                           ${tourData[value].price}
-                        </Typography>
+                        </Typography> */}
                         <Tooltip title="add to favorites">
                           <FavoriteBorderSharpIcon
                             sx={{
@@ -204,7 +199,12 @@ export default function SpacingGrid() {
                       <CardActions>
                         <Button
                           size="small"
-                          sx={{ position: "absolute", bottom: "20px" }}
+                          sx={{
+                            position: "absolute",
+                            right: 140,
+                            bottom: "20px",
+                            color: "white",
+                          }}
                         >
                           Find Out More
                         </Button>

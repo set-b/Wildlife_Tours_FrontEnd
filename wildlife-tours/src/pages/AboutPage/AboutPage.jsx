@@ -71,8 +71,9 @@ function AboutPage() {
                 Wildlife Tours is a full-stack application based on a fictitious
                 company created by Brandyn Tse. The front-end has been developed
                 using React js framework and the material UI library. Assets
-                have been compiled from royalty-free images and video. The video
-                above was edited using OpenShot, an open-source editor.
+                have been compiled from royalty-free images and video, as well
+                as the Youtube channel Scenic Scenes. The video above was edited
+                using OpenShot, an open-source editor.
               </Typography>
               {/* <Link variant="subtitle1" href={pic}>
                 example
