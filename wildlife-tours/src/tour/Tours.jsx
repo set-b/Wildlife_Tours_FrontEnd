@@ -3,6 +3,8 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+// import CardHeader from "@mui/material/CardHeader";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -17,6 +19,7 @@ export default function SpacingGrid() {
   const [tourData, setTourData] = useState([]);
   const [tourNumberArray, setTourNumberArray] = useState([]);
   const [playObjects, setPlayObjects] = useState([]);
+  // const [clicked, setClicked] = useState(false);
 
   const videoLinks = [
     {
@@ -49,6 +52,14 @@ export default function SpacingGrid() {
     return video[0].link;
   };
 
+  const handleClickTrue = (value) => {
+    setPlayObjects([...playObjects, (playObjects[value].clicked = true)]);
+  };
+
+  const handleClickFalse = (value) => {
+    setPlayObjects([...playObjects, (playObjects[value].clicked = false)]);
+  };
+
   const togglePlay = (value) => {
     setPlayObjects([...playObjects, (playObjects[value].isPlaying = true)]);
     console.log(playObjects[value].isPlaying);
@@ -63,7 +74,7 @@ export default function SpacingGrid() {
     playObjects.length = number;
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < number; i++) {
-      const playObject = { isPlaying: false };
+      const playObject = { isPlaying: false, clicked: false };
       playObjects[i] = playObject;
     }
     console.log(playObjects);
@@ -163,29 +174,70 @@ export default function SpacingGrid() {
                         <Typography gutterBottom variant="h5" component="div">
                           {tourData[value].title}
                         </Typography>
-                        {/* <Typography variant="body2" color="text.secondary">
-                          ${tourData[value].price}
-                        </Typography> */}
                         <Tooltip title="add to favorites">
-                          <FavoriteBorderSharpIcon
+                          {playObjects[value].clicked ? (
+                            <FavoriteIcon
+                              onClick={() => handleClickFalse(value)}
+                              sx={{
+                                color: "white",
+                                opacity: "40%",
+                                position: "relative",
+                                left: 175,
+                                bottom: 355,
+                                fontSize: 50,
+                                "&:hover": {
+                                  color: "white",
+                                  backgroundColor: "grey",
+                                  cursor: "pointer",
+                                  opacity: "100%",
+                                },
+                              }}
+                            />
+                          ) : (
+                            <FavoriteBorderSharpIcon
+                              onClick={() => handleClickTrue(value)}
+                              sx={{
+                                color: "white",
+                                opacity: "40%",
+                                position: "relative",
+                                left: 175,
+                                bottom: 355,
+                                fontSize: 50,
+                                "&:hover": {
+                                  color: "white",
+                                  backgroundColor: "grey",
+                                  cursor: "pointer",
+                                  opacity: "100%",
+                                },
+                              }}
+                            />
+                          )}
+                          {/* <FavoriteBorderSharpIcon
                             sx={{
                               color: "white",
                               opacity: "40%",
+                              position: "relative",
+                              left: 175,
+                              bottom: 300,
+                              fontSize: 50,
                               "&:hover": {
                                 color: "white",
                                 backgroundColor: "grey",
                                 cursor: "pointer",
                                 opacity: "100%",
-                                // add onclick for menu to pop up
                               },
                             }}
-                          />
+                          /> */}
                         </Tooltip>
                         <Tooltip title="add to cart">
                           <AddShoppingCartIcon
                             sx={{
                               color: "white",
                               opacity: "40%",
+                              position: "relative",
+                              right: 175,
+                              bottom: 355,
+                              fontSize: 50,
                               "&:hover": {
                                 color: "white",
                                 backgroundColor: "grey",
