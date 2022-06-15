@@ -3,7 +3,6 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-// import CardHeader from "@mui/material/CardHeader";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
@@ -19,7 +18,6 @@ export default function SpacingGrid() {
   const [tourData, setTourData] = useState([]);
   const [tourNumberArray, setTourNumberArray] = useState([]);
   const [playObjects, setPlayObjects] = useState([]);
-  // const [clicked, setClicked] = useState(false);
 
   const videoLinks = [
     {
@@ -77,8 +75,7 @@ export default function SpacingGrid() {
       const playObject = { isPlaying: false, clicked: false };
       playObjects[i] = playObject;
     }
-    console.log(playObjects);
-    console.log(playObjects[0].isPlaying);
+    // console.log(playObjects[0].isPlaying);
     setPlayObjects(playObjects);
   };
 
@@ -107,7 +104,7 @@ export default function SpacingGrid() {
     renderTours();
   }, []);
   return (
-    <div>
+    <div style={{ position: "relative", top: "-350px" }}>
       {tourNumberArray.length > 0 && (
         <Grid sx={{ flexGrow: 1 }} container spacing={7}>
           <Grid item xs={12} elevation={3}>
@@ -212,22 +209,6 @@ export default function SpacingGrid() {
                               }}
                             />
                           )}
-                          {/* <FavoriteBorderSharpIcon
-                            sx={{
-                              color: "white",
-                              opacity: "40%",
-                              position: "relative",
-                              left: 175,
-                              bottom: 300,
-                              fontSize: 50,
-                              "&:hover": {
-                                color: "white",
-                                backgroundColor: "grey",
-                                cursor: "pointer",
-                                opacity: "100%",
-                              },
-                            }}
-                          /> */}
                         </Tooltip>
                         <Tooltip title="add to cart">
                           <AddShoppingCartIcon
