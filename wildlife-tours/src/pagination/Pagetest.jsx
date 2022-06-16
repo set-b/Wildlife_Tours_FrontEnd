@@ -93,12 +93,14 @@ export default function PageTest() {
   const count = Math.ceil(tourData.length / perPage);
   const data = usePagination(tourData, perPage);
 
-  const dataNumberArray = Array.from(Array(data.currentData().length).keys());
+  const dataNumberArray = Array.from(Array(data.currentData().length).keys()); // this should be deleted
 
   const handleChange = (e, p) => {
     setPage(p);
     data.jump(p);
+    console.log(page);
   };
+  // FIND A WAY TO MAP WITHOUT USING ARRAY.FROM!!!
   return (
     <Box
       justifyContent="center"
@@ -115,10 +117,147 @@ export default function PageTest() {
           shape="rounded"
           onChange={handleChange}
         />
-        <Grid sx={{ flexGrow: 1 }} container spacing={7}>
+        <Grid container spacing={3}>
+          {data.currentData().map((tour) => (
+            <Tilt style={{}}>
+              <Card
+                elevation={5}
+                sx={{
+                  maxWidth: 500,
+                  width: 400,
+                  height: "400px",
+                  cursor: "pointer",
+                  "&:hover": {
+                    transform: "scale(1.1)",
+                    transition: "transform 330ms ease-in-out",
+                  },
+                }}
+                // onMouseEnter={() => togglePlay(value)}
+                // onMouseLeave={() => togglePause(value)}
+              >
+                <CardMedia
+                  height="200"
+                  sx={{
+                    transformStyle: "preserve-3d",
+                    transform: "translateZ(60px)",
+                  }}
+                >
+                  <header
+                    style={{
+                      position: "absolute",
+                      width: "100%",
+                      height: "18%",
+                      background: "black",
+                      color: "black",
+                      top: 0,
+                    }}
+                  >
+                    Text
+                  </header>
+                  <ReactPlayer
+                    url={videoByTourLocation(tour.location)}
+                    // playing={playObjects[value].isPlaying}
+                    volume="0"
+                    muted
+                    width="auto"
+                    height="300px"
+                  />
+                  <footer
+                    style={{
+                      position: "absolute",
+                      width: "100%",
+                      height: "18%",
+                      background: "black",
+                      bottom: 0,
+                      color: "black",
+                    }}
+                  >
+                    Text
+                  </footer>
+                </CardMedia>
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {tour.title}
+                  </Typography>
+                  <Tooltip title="add to favorites">
+                    {playObjects[tour.id].clicked ? (
+                      <FavoriteIcon
+                        // onClick={() => handleClickFalse(value)}
+                        sx={{
+                          color: "white",
+                          opacity: "40%",
+                          position: "relative",
+                          left: 175,
+                          bottom: 355,
+                          fontSize: 50,
+                          "&:hover": {
+                            color: "white",
+                            backgroundColor: "grey",
+                            cursor: "pointer",
+                            opacity: "100%",
+                          },
+                        }}
+                      />
+                    ) : (
+                      <FavoriteBorderSharpIcon
+                        // onClick={() => handleClickTrue(value)}
+                        sx={{
+                          color: "white",
+                          opacity: "40%",
+                          position: "relative",
+                          left: 175,
+                          bottom: 355,
+                          fontSize: 50,
+                          "&:hover": {
+                            color: "white",
+                            backgroundColor: "grey",
+                            cursor: "pointer",
+                            opacity: "100%",
+                          },
+                        }}
+                      />
+                    )}
+                  </Tooltip>
+                  <Tooltip title="add to cart">
+                    <AddShoppingCartIcon
+                      sx={{
+                        color: "white",
+                        opacity: "40%",
+                        position: "relative",
+                        right: 175,
+                        bottom: 355,
+                        fontSize: 50,
+                        "&:hover": {
+                          color: "white",
+                          backgroundColor: "grey",
+                          cursor: "pointer",
+                          opacity: "100%",
+                        },
+                      }}
+                    />
+                  </Tooltip>
+                </CardContent>
+                <CardActions>
+                  <Button
+                    size="small"
+                    sx={{
+                      position: "absolute",
+                      right: 140,
+                      bottom: "20px",
+                      color: "white",
+                    }}
+                  >
+                    Find Out More
+                  </Button>
+                </CardActions>
+              </Card>
+            </Tilt>
+          ))}
+        </Grid>
+        {/* <Grid sx={{ flexGrow: 1 }} container spacing={7}>
           <Grid item xs={12} elevation={3}>
             <Grid container justifyContent="center" spacing={2}>
-              {dataNumberArray.map((value) => (
+              {data.currentData().map((value) => (
                 <Grid key={value} item>
                   <Tilt style={{}}>
                     <Card
@@ -156,7 +295,9 @@ export default function PageTest() {
                           Text
                         </header>
                         <ReactPlayer
-                          url={videoByTourLocation(tourData[value].location)}
+                          url={videoByTourLocation(
+                            data.currentData[value].location
+                          )}
                           playing={playObjects[value].isPlaying}
                           volume="0"
                           muted
@@ -257,7 +398,7 @@ export default function PageTest() {
               ))}
             </Grid>
           </Grid>
-        </Grid>
+        </Grid> */}
       </Stack>
     </Box>
   );
