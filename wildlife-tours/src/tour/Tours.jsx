@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -12,14 +13,19 @@ import ReactPlayer from "react-player";
 import FavoriteBorderSharpIcon from "@mui/icons-material/FavoriteBorderSharp";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Tooltip from "@mui/material/Tooltip";
+// import PageTest from "../pagination/Pagetest";
 import Constants from "../constants/Constants";
 // import { Pagination } from "@mui/material";
-import AppPagination from "../pagination/index";
+// import AppPagination from "../pagination/index";
 
 export default function SpacingGrid() {
   const [tourData, setTourData] = useState([]);
   const [tourNumberArray, setTourNumberArray] = useState([]);
   const [playObjects, setPlayObjects] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(3);
 
   const videoLinks = [
     {
@@ -84,6 +90,7 @@ export default function SpacingGrid() {
   useEffect(() => {
     let numberOfTours = 0;
     const renderTours = async () => {
+      setLoading(true);
       await fetch(`${Constants.HEROKU_ENDPOINT_POSTGRESQL}tours`, {
         mode: "cors",
       })
@@ -94,6 +101,7 @@ export default function SpacingGrid() {
           throw new Error("Oops! Something went wrong!");
         })
         .then((responseData) => {
+          setLoading(false);
           setTourData(responseData);
           console.log(responseData);
           numberOfTours = responseData.length;
@@ -105,9 +113,19 @@ export default function SpacingGrid() {
     };
     renderTours();
   }, []);
+
+  // get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = tourData.slice(indexOfFirstPost, indexOfLastPost);
+  // console.log(currentPosts);
+  const currentPostNumberArray = Array.from(Array(currentPosts.length).keys()); // doing this wrong!
+  console.log(currentPostNumberArray);
   return (
     <div style={{ position: "relative", top: "-350px" }}>
-      <AppPagination />
+      {/* <PageTest tourData={tourData} /> */}
+      {loading ? <h1>loading</h1> : <h1>not loading</h1>}
+      {/* <AppPagination /> */}
       {tourNumberArray.length > 0 && (
         <Grid sx={{ flexGrow: 1 }} container spacing={7}>
           <Grid item xs={12} elevation={3}>

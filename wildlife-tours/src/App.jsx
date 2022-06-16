@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import Pagetest from "./pagination/Pagetest";
 import HomePage from "./pages/HomePage/HomePage";
 import About from "./pages/AboutPage/AboutPage";
 import BookATour from "./pages/BookATour/BookATour";
@@ -42,6 +43,7 @@ function App() {
           <Routes>
             {/* maintenance will check jwt for employee or admin roles, element will be maintenance page */}
             <Route exact path="/maintenance" element={<Maintenance />} />
+            <Route exact path="/test" element={<Pagetest />} />
           </Routes>
         </Router>
         <div
