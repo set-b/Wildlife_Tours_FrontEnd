@@ -13,7 +13,7 @@ import ReactPlayer from "react-player";
 import FavoriteBorderSharpIcon from "@mui/icons-material/FavoriteBorderSharp";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Tooltip from "@mui/material/Tooltip";
-// import PageTest from "../pagination/Pagetest";
+import PageTest from "../pagination/Pagetest";
 import Constants from "../constants/Constants";
 // import { Pagination } from "@mui/material";
 // import AppPagination from "../pagination/index";
@@ -123,7 +123,7 @@ export default function SpacingGrid() {
   console.log(currentPostNumberArray);
   return (
     <div style={{ position: "relative", top: "-350px" }}>
-      {/* <PageTest tourData={tourData} /> */}
+      <PageTest />
       {loading ? <h1>loading</h1> : <h1>not loading</h1>}
       {/* <AppPagination /> */}
       {tourNumberArray.length > 0 && (
