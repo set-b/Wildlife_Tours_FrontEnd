@@ -130,7 +130,10 @@ export default function PageTest() {
       justifyContent="center"
       alignItems="center"
       display="flex"
-      sx={{ margin: "20px 0px" }}
+      sx={{
+        margin: "20px 0px", // position: "relative"
+      }}
+      p="5"
     >
       <Stack spacing={2}>
         <Pagination
@@ -140,6 +143,10 @@ export default function PageTest() {
           variant="outlined"
           shape="rounded"
           onChange={handleChange}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}
         />
         <Grid sx={{ flexGrow: 1 }} container spacing={7}>
           {data.currentData().map((tour) => (
