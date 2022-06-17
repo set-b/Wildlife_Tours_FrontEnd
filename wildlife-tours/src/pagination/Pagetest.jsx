@@ -147,6 +147,7 @@ export default function PageTest() {
               <Card
                 elevation={5}
                 sx={{
+                  position: "relative",
                   maxWidth: 500,
                   width: 400,
                   height: "400px",
@@ -154,6 +155,7 @@ export default function PageTest() {
                   cursor: "pointer",
                   "&:hover": {
                     transform: "scale(1.1)",
+                    transformOrigin: "center",
                     transition: "transform 330ms ease-in-out",
                   },
                 }}
@@ -211,7 +213,7 @@ export default function PageTest() {
                         sx={{
                           color: "white",
                           opacity: "40%",
-                          position: "relative",
+                          position: "absolute",
                           left: 175,
                           bottom: 355,
                           fontSize: 50,
@@ -220,6 +222,7 @@ export default function PageTest() {
                             backgroundColor: "grey",
                             cursor: "pointer",
                             opacity: "100%",
+                            // margin: 0,
                           },
                         }}
                       />
@@ -229,7 +232,7 @@ export default function PageTest() {
                         sx={{
                           color: "white",
                           opacity: "40%",
-                          position: "relative",
+                          position: "absolute",
                           left: 175,
                           bottom: 355,
                           fontSize: 50,
@@ -238,6 +241,7 @@ export default function PageTest() {
                             backgroundColor: "grey",
                             cursor: "pointer",
                             opacity: "100%",
+                            // margin: 0,
                           },
                         }}
                       />
@@ -248,7 +252,7 @@ export default function PageTest() {
                       sx={{
                         color: "white",
                         opacity: "40%",
-                        position: "relative",
+                        position: "absolute",
                         right: 175,
                         bottom: 355,
                         fontSize: 50,
@@ -262,23 +266,25 @@ export default function PageTest() {
                     />
                   </Tooltip>
                 </CardContent>
-                {/* <CardActions> */}
-                {/* <CardContent> */}
-                <Button
-                  size="small"
-                  sx={{
-                    position: "relative",
-                    right: 320,
-                    bottom: "20px",
-                    color: "white",
-                    flexShrink: 1,
-                  }}
+                <CardActions
+                // sx={{
+                //   transformStyle: "preserve-3d",
+                //   transform: "translateZ(60px)",
+                // }}
                 >
-                  Find Out More
-                </Button>
-                <Button>Test</Button>
-                {/* </CardContent> */}
-                {/* </CardActions> */}
+                  <Button
+                    size="small"
+                    sx={{
+                      position: "sticky",
+                      // objectPosition: 50% 50%,
+                      right: 150,
+                      bottom: "20px",
+                      color: "white",
+                    }}
+                  >
+                    Find Out More
+                  </Button>
+                </CardActions>
               </Card>
             </Tilt>
           ))}
