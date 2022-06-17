@@ -117,7 +117,7 @@ export default function PageTest() {
   }, []);
 
   const count = Math.ceil(tourData.length / perPage);
-  const data = usePagination(tourData, perPage);
+  const data = usePagination(tourData, perPage); // perhaps change tourdata when searching
   const dataNumberArray = Array.from(Array(data.currentData().length).keys()); // this should be deleted
 
   const handleChange = (e, p) => {
@@ -131,7 +131,7 @@ export default function PageTest() {
       alignItems="center"
       display="flex"
       sx={{
-        margin: "20px 0px", // position: "relative"
+        margin: "20px 0px",
       }}
       p="5"
     >
@@ -276,7 +276,6 @@ export default function PageTest() {
                     size="small"
                     sx={{
                       position: "absolute",
-                      // objectPosition: 50% 50%,
                       right: 140,
                       bottom: "20px",
                       color: "white",
