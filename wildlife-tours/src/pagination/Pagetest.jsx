@@ -23,32 +23,59 @@ import { videoLinks } from "../assets/videoLinks";
 
 export default function PageTest() {
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(1);
+  const [perPage, setPerPage] = useState(3);
   const [loading, setLoading] = useState(false);
   const [tourData, setTourData] = useState([]);
   const [playObjects, setPlayObjects] = useState([]);
-  //   console.log(tourData);
 
-  const handleClickTrue = (value) => {
-    setPlayObjects([...playObjects, (playObjects[value].clicked = true)]);
+  const handleClickTrue = (id) => {
+    const videoClickIndex = playObjects.findIndex((play) => play.id === id);
+    console.log(videoClickIndex);
+    setPlayObjects([
+      ...playObjects,
+      (playObjects[videoClickIndex].clicked = true),
+    ]);
   };
 
-  const handleClickFalse = (value) => {
-    setPlayObjects([...playObjects, (playObjects[value].clicked = false)]);
+  const handleClickFalse = (id) => {
+    const videoClickIndex = playObjects.findIndex((play) => play.id === id);
+    console.log(videoClickIndex);
+    setPlayObjects([
+      ...playObjects,
+      (playObjects[videoClickIndex].clicked = false),
+    ]);
   };
 
-  const togglePlay = (value) => {
-    setPlayObjects([...playObjects, (playObjects[value].isPlaying = true)]);
-    console.log(playObjects[value].isPlaying);
+  const isClicked = (id) => {
+    const videoClickIndex = playObjects.findIndex((play) => play.id === id);
+    return playObjects[videoClickIndex].clicked;
   };
 
-  const togglePause = (value) => {
-    setPlayObjects([...playObjects, (playObjects[value].isPlaying = false)]);
-    console.log(playObjects[value].isPlaying);
+  const videoIsPlaying = (id) => {
+    const videoClickIndex = playObjects.findIndex((play) => play.id === id);
+    return playObjects[videoClickIndex].isPlaying;
+  };
+
+  const togglePlay = (id) => {
+    const videoClickIndex = playObjects.findIndex((play) => play.id === id);
+    setPlayObjects([
+      ...playObjects,
+      (playObjects[videoClickIndex].isPlaying = true),
+    ]);
+    console.log(playObjects[videoClickIndex].isPlaying);
+  };
+
+  const togglePause = (id) => {
+    const videoClickIndex = playObjects.findIndex((play) => play.id === id);
+    setPlayObjects([
+      ...playObjects,
+      (playObjects[videoClickIndex].isPlaying = false),
+    ]);
+    console.log(playObjects[videoClickIndex].isPlaying);
   };
 
   const videoByTourLocation = (location) => {
-    const video = videoLinks.filter((vid) => vid.location === location); // this filter is probably wrong
+    const video = videoLinks.filter((vid) => vid.location === location);
     console.log(video[0].link);
     return video[0].link;
   };
@@ -57,7 +84,7 @@ export default function PageTest() {
     playObjects.length = number;
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < number; i++) {
-      const playObject = { isPlaying: false, clicked: false };
+      const playObject = { id: i + 1, isPlaying: false, clicked: false };
       playObjects[i] = playObject;
     }
     setPlayObjects(playObjects);
@@ -82,7 +109,6 @@ export default function PageTest() {
           console.log(responseData);
           numberOfTours = responseData.length;
           const numberArray = Array.from(Array(numberOfTours).keys());
-          //   setTourNumberArray(numberArray);
           createVideoPlayingObjects(numberOfTours);
         })
         .catch((error) => console.log(error));
@@ -92,7 +118,6 @@ export default function PageTest() {
 
   const count = Math.ceil(tourData.length / perPage);
   const data = usePagination(tourData, perPage);
-
   const dataNumberArray = Array.from(Array(data.currentData().length).keys()); // this should be deleted
 
   const handleChange = (e, p) => {
@@ -100,7 +125,6 @@ export default function PageTest() {
     data.jump(p);
     console.log(page);
   };
-  // FIND A WAY TO MAP WITHOUT USING ARRAY.FROM!!!
   return (
     <Box
       justifyContent="center"
@@ -117,7 +141,7 @@ export default function PageTest() {
           shape="rounded"
           onChange={handleChange}
         />
-        <Grid container spacing={3}>
+        <Grid sx={{ flexGrow: 1 }} container spacing={7}>
           {data.currentData().map((tour) => (
             <Tilt style={{}}>
               <Card
@@ -126,14 +150,15 @@ export default function PageTest() {
                   maxWidth: 500,
                   width: 400,
                   height: "400px",
+                  margin: 1,
                   cursor: "pointer",
                   "&:hover": {
                     transform: "scale(1.1)",
                     transition: "transform 330ms ease-in-out",
                   },
                 }}
-                // onMouseEnter={() => togglePlay(value)}
-                // onMouseLeave={() => togglePause(value)}
+                onMouseEnter={() => togglePlay(tour.id)}
+                onMouseLeave={() => togglePause(tour.id)}
               >
                 <CardMedia
                   height="200"
@@ -156,7 +181,7 @@ export default function PageTest() {
                   </header>
                   <ReactPlayer
                     url={videoByTourLocation(tour.location)}
-                    // playing={playObjects[value].isPlaying}
+                    playing={videoIsPlaying(tour.id)}
                     volume="0"
                     muted
                     width="auto"
@@ -180,9 +205,9 @@ export default function PageTest() {
                     {tour.title}
                   </Typography>
                   <Tooltip title="add to favorites">
-                    {playObjects[tour.id].clicked ? (
+                    {isClicked(tour.id) ? (
                       <FavoriteIcon
-                        // onClick={() => handleClickFalse(value)}
+                        onClick={() => handleClickFalse(tour.id)}
                         sx={{
                           color: "white",
                           opacity: "40%",
@@ -200,7 +225,7 @@ export default function PageTest() {
                       />
                     ) : (
                       <FavoriteBorderSharpIcon
-                        // onClick={() => handleClickTrue(value)}
+                        onClick={() => handleClickTrue(tour.id)}
                         sx={{
                           color: "white",
                           opacity: "40%",
@@ -237,168 +262,27 @@ export default function PageTest() {
                     />
                   </Tooltip>
                 </CardContent>
-                <CardActions>
-                  <Button
-                    size="small"
-                    sx={{
-                      position: "absolute",
-                      right: 140,
-                      bottom: "20px",
-                      color: "white",
-                    }}
-                  >
-                    Find Out More
-                  </Button>
-                </CardActions>
+                {/* <CardActions> */}
+                {/* <CardContent> */}
+                <Button
+                  size="small"
+                  sx={{
+                    position: "relative",
+                    right: 320,
+                    bottom: "20px",
+                    color: "white",
+                    flexShrink: 1,
+                  }}
+                >
+                  Find Out More
+                </Button>
+                <Button>Test</Button>
+                {/* </CardContent> */}
+                {/* </CardActions> */}
               </Card>
             </Tilt>
           ))}
         </Grid>
-        {/* <Grid sx={{ flexGrow: 1 }} container spacing={7}>
-          <Grid item xs={12} elevation={3}>
-            <Grid container justifyContent="center" spacing={2}>
-              {data.currentData().map((value) => (
-                <Grid key={value} item>
-                  <Tilt style={{}}>
-                    <Card
-                      elevation={5}
-                      sx={{
-                        maxWidth: 500,
-                        width: 400,
-                        height: "400px",
-                        cursor: "pointer",
-                        "&:hover": {
-                          transform: "scale(1.1)",
-                          transition: "transform 330ms ease-in-out",
-                        },
-                      }}
-                      onMouseEnter={() => togglePlay(value)}
-                      onMouseLeave={() => togglePause(value)}
-                    >
-                      <CardMedia
-                        height="200"
-                        sx={{
-                          transformStyle: "preserve-3d",
-                          transform: "translateZ(60px)",
-                        }}
-                      >
-                        <header
-                          style={{
-                            position: "absolute",
-                            width: "100%",
-                            height: "18%",
-                            background: "black",
-                            color: "black",
-                            top: 0,
-                          }}
-                        >
-                          Text
-                        </header>
-                        <ReactPlayer
-                          url={videoByTourLocation(
-                            data.currentData[value].location
-                          )}
-                          playing={playObjects[value].isPlaying}
-                          volume="0"
-                          muted
-                          width="auto"
-                          height="300px"
-                        />
-                        <footer
-                          style={{
-                            position: "absolute",
-                            width: "100%",
-                            height: "18%",
-                            background: "black",
-                            bottom: 0,
-                            color: "black",
-                          }}
-                        >
-                          Text
-                        </footer>
-                      </CardMedia>
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          {tourData[value].title}
-                        </Typography>
-                        <Tooltip title="add to favorites">
-                          {playObjects[value].clicked ? (
-                            <FavoriteIcon
-                              onClick={() => handleClickFalse(value)}
-                              sx={{
-                                color: "white",
-                                opacity: "40%",
-                                position: "relative",
-                                left: 175,
-                                bottom: 355,
-                                fontSize: 50,
-                                "&:hover": {
-                                  color: "white",
-                                  backgroundColor: "grey",
-                                  cursor: "pointer",
-                                  opacity: "100%",
-                                },
-                              }}
-                            />
-                          ) : (
-                            <FavoriteBorderSharpIcon
-                              onClick={() => handleClickTrue(value)}
-                              sx={{
-                                color: "white",
-                                opacity: "40%",
-                                position: "relative",
-                                left: 175,
-                                bottom: 355,
-                                fontSize: 50,
-                                "&:hover": {
-                                  color: "white",
-                                  backgroundColor: "grey",
-                                  cursor: "pointer",
-                                  opacity: "100%",
-                                },
-                              }}
-                            />
-                          )}
-                        </Tooltip>
-                        <Tooltip title="add to cart">
-                          <AddShoppingCartIcon
-                            sx={{
-                              color: "white",
-                              opacity: "40%",
-                              position: "relative",
-                              right: 175,
-                              bottom: 355,
-                              fontSize: 50,
-                              "&:hover": {
-                                color: "white",
-                                backgroundColor: "grey",
-                                cursor: "pointer",
-                                opacity: "100%",
-                              },
-                            }}
-                          />
-                        </Tooltip>
-                      </CardContent>
-                      <CardActions>
-                        <Button
-                          size="small"
-                          sx={{
-                            position: "absolute",
-                            right: 140,
-                            bottom: "20px",
-                            color: "white",
-                          }}
-                        >
-                          Find Out More
-                        </Button>
-                      </CardActions>
-                    </Card>
-                  </Tilt>
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
-        </Grid> */}
       </Stack>
     </Box>
   );
