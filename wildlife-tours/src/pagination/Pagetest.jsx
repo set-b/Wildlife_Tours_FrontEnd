@@ -214,15 +214,14 @@ export default function PageTest() {
                           color: "white",
                           opacity: "40%",
                           position: "absolute",
-                          left: 175,
-                          bottom: 355,
+                          left: 330,
+                          bottom: 350,
                           fontSize: 50,
                           "&:hover": {
                             color: "white",
                             backgroundColor: "grey",
                             cursor: "pointer",
                             opacity: "100%",
-                            // margin: 0,
                           },
                         }}
                       />
@@ -233,15 +232,14 @@ export default function PageTest() {
                           color: "white",
                           opacity: "40%",
                           position: "absolute",
-                          left: 175,
-                          bottom: 355,
+                          left: 330,
+                          bottom: 350,
                           fontSize: 50,
                           "&:hover": {
                             color: "white",
                             backgroundColor: "grey",
                             cursor: "pointer",
                             opacity: "100%",
-                            // margin: 0,
                           },
                         }}
                       />
@@ -253,8 +251,8 @@ export default function PageTest() {
                         color: "white",
                         opacity: "40%",
                         position: "absolute",
-                        right: 175,
-                        bottom: 355,
+                        right: 330,
+                        bottom: 350,
                         fontSize: 50,
                         "&:hover": {
                           color: "white",
@@ -266,18 +264,13 @@ export default function PageTest() {
                     />
                   </Tooltip>
                 </CardContent>
-                <CardActions
-                // sx={{
-                //   transformStyle: "preserve-3d",
-                //   transform: "translateZ(60px)",
-                // }}
-                >
+                <CardActions>
                   <Button
                     size="small"
                     sx={{
-                      position: "sticky",
+                      position: "absolute",
                       // objectPosition: 50% 50%,
-                      right: 150,
+                      right: 140,
                       bottom: "20px",
                       color: "white",
                     }}
