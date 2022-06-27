@@ -128,7 +128,7 @@ export default function PageTest(search) {
     };
     renderTours();
     filterResults(search);
-  }, []);
+  }, []); // need to monitor filterResults or search, or something, put it as a param here, I guess
 
   const count = Math.ceil(tourData.length / perPage);
   const data = usePagination(tourData, perPage); // perhaps change tourdata when searching
