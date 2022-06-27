@@ -19,6 +19,7 @@ import Constants from "../constants/Constants";
 // import AppPagination from "../pagination/index";
 
 export default function SpacingGrid() {
+  // MIGHT DELETE THIS WHOLE THING AFTER SEARCH FUNCTIONALITY COMPLETED
   const [tourData, setTourData] = useState([]);
   const [tourNumberArray, setTourNumberArray] = useState([]);
   const [playObjects, setPlayObjects] = useState([]);

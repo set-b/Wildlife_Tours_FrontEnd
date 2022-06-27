@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
@@ -8,13 +8,46 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Link from "@mui/material/Link";
+import PageTest from "../pagination/Pagetest";
 
 export default function SearchBar() {
-  //   const [value, setValue] = React.useState("Controlled");
+  // add functionality to search bar through input handler; state is one letter behind input; check financial modeling app [X]
 
-  //   const handleChange = (event) => {
-  //     setValue(event.target.value);
-  //   };
+  // import pageTest component with searcValue as props []
+  // use value to filter through tourdata []
+  // pass new tour data through pagination function as const data []
+  // re-render paginated results through passing data via map []
+
+  const [searchValue, setSearchValue] = useState({
+    value: "",
+    // searching: false,
+    // change to true when button clicked; after filtering, change back to false!
+  });
+
+  const inputHandler = (event) => {
+    const lowerCase = event.target.value.toLowerCase();
+    setSearchValue((prevState) => ({ ...prevState, value: lowerCase }));
+    console.log(searchValue);
+  };
+
+  // function which determines if anything is passed to pageTest as a prop
+  const search = () => {
+    console.log(searchValue.value);
+    if (searchValue.value === "") {
+      document.getElementById("outlined-textarea").focus();
+      sessionStorage.setItem("searching", false);
+    } else {
+      sessionStorage.setItem("searching", true);
+    }
+    const searching = sessionStorage.getItem("searching");
+    console.log(searching);
+    // return searching; // why is this returned?
+    // use sessionStorage boolean instead of searching prop?
+  };
+
+  useEffect(() => {
+    setSearchValue(searchValue); // console is still behind, but that may not be an issue.
+  }, [searchValue]);
 
   return (
     <Box
@@ -30,6 +63,7 @@ export default function SearchBar() {
           id="outlined-textarea"
           label="Search Tours"
           placeholder="i.e. Elephants in Africa"
+          onChange={inputHandler}
           multiline
           fullWidth
           InputProps={{
@@ -47,10 +81,7 @@ export default function SearchBar() {
                         opacity: "100%",
                       },
                     }}
-                    onClick={() => {
-                      document.getElementById("outlined-textarea").focus();
-                      // toggle focus if empty; if content is there -> filter
-                    }}
+                    onClick={() => search()}
                   />
                 </IconButton>
               </InputAdornment>
@@ -84,6 +115,7 @@ export default function SearchBar() {
       >
         Already booked? Sign in
       </Link>
+      <PageTest search={searchValue} />
     </Box>
   );
 }

@@ -21,12 +21,29 @@ import Constants from "../constants/Constants";
 import usePagination from "./usePaginationTest";
 import { videoLinks } from "../assets/videoLinks";
 
-export default function PageTest() {
+export default function PageTest(search) {
+  // add props here for searchbar functionality, filtering tourdata []
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(3);
   const [loading, setLoading] = useState(false);
   const [tourData, setTourData] = useState([]);
   const [playObjects, setPlayObjects] = useState([]);
+  // add state which is determined by session storage?
+
+  // function to filter results; uses search prop
+  const filterResults = (searchProp) => {
+    if (sessionStorage.getItem("searching") === true) {
+      console.log("filtering!"); // filter by search terms for description, title
+      // set the tourData to the filtered Date through state
+      sessionStorage.setItem("searching", false);
+    }
+    console.log("not filtering!");
+    return tourData; // otherwise return regular resuls??
+  };
+
+  useEffect(() => {
+    filterResults(search);
+  }, []);
 
   const handleClickTrue = (id) => {
     const videoClickIndex = playObjects.findIndex((play) => play.id === id);
@@ -132,6 +149,8 @@ export default function PageTest() {
       display="flex"
       sx={{
         margin: "20px 0px",
+        position: "relative",
+        top: "-350px",
       }}
       p="5"
     >
