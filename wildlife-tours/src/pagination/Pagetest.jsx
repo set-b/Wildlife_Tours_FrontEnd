@@ -29,6 +29,7 @@ export default function PageTest(search) {
   const [tourData, setTourData] = useState([]);
   const [playObjects, setPlayObjects] = useState([]);
   // add state which is determined by session storage?
+  // set the prop 'search' to state, and monitor it through useEffect
 
   // function to filter results; uses search prop
   const filterResults = (searchProp) => {
