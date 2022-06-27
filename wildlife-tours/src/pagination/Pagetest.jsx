@@ -38,12 +38,8 @@ export default function PageTest(search) {
       sessionStorage.setItem("searching", false);
     }
     console.log("not filtering!");
-    return tourData; // otherwise return regular resuls??
+    return tourData; // otherwise return regular results??
   };
-
-  useEffect(() => {
-    filterResults(search);
-  }, []);
 
   const handleClickTrue = (id) => {
     const videoClickIndex = playObjects.findIndex((play) => play.id === id);
@@ -131,6 +127,7 @@ export default function PageTest(search) {
         .catch((error) => console.log(error));
     };
     renderTours();
+    filterResults(search);
   }, []);
 
   const count = Math.ceil(tourData.length / perPage);

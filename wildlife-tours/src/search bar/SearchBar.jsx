@@ -69,7 +69,7 @@ export default function SearchBar() {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton>
+                <IconButton onClick={() => search()}>
                   <SearchIcon
                     sx={{
                       color: "white",
@@ -81,7 +81,6 @@ export default function SearchBar() {
                         opacity: "100%",
                       },
                     }}
-                    onClick={() => search()}
                   />
                 </IconButton>
               </InputAdornment>
