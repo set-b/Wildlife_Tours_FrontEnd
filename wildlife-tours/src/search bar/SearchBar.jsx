@@ -11,17 +11,12 @@ import Link from "@mui/material/Link";
 import PageTest from "../pagination/Pagetest";
 
 export default function SearchBar() {
-  // add functionality to search bar through input handler; state is one letter behind input; check financial modeling app [X]
-
-  // import pageTest component with searcValue as props []
-  // use value to filter through tourdata []
-  // pass new tour data through pagination function as const data []
   // re-render paginated results through passing data via map []
+
+  const [sentSearch, setSentSearch] = useState({ value: "" });
 
   const [searchValue, setSearchValue] = useState({
     value: "",
-    // searching: false,
-    // change to true when button clicked; after filtering, change back to false!
   });
 
   const inputHandler = (event) => {
@@ -30,23 +25,13 @@ export default function SearchBar() {
     console.log(searchValue);
   };
 
-  // function which determines if anything is passed to pageTest as a prop
   const search = () => {
-    console.log(searchValue.value);
-    if (searchValue.value === "") {
-      document.getElementById("outlined-textarea").focus();
-      sessionStorage.setItem("searching", false);
-    } else {
-      sessionStorage.setItem("searching", true);
-    }
-    const searching = sessionStorage.getItem("searching");
-    console.log(searching);
-    // return searching; // why is this returned?
-    // use sessionStorage boolean instead of searching prop?
+    const lowerCase = searchValue.value.toLowerCase();
+    setSentSearch((prevState) => ({ ...prevState, value: lowerCase }));
   };
 
   useEffect(() => {
-    setSearchValue(searchValue); // console is still behind, but that may not be an issue.
+    setSearchValue(searchValue);
   }, [searchValue]);
 
   return (
@@ -114,7 +99,7 @@ export default function SearchBar() {
       >
         Already booked? Sign in
       </Link>
-      <PageTest search={searchValue} />
+      <PageTest search={sentSearch.value} />
     </Box>
   );
 }
