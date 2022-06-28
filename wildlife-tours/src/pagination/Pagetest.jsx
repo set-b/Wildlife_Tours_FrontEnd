@@ -28,8 +28,23 @@ export default function PageTest(props) {
   const [loading, setLoading] = useState(false); // this will be used for loading spinner, later
   const [tourData, setTourData] = useState([]);
   const [playObjects, setPlayObjects] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
-  // state successfully passed to this component. But how to filter results??? []
+  // LOOK AT SEARCH HANDLER
+
+  const searchHandler = (value) => {
+    console.log(value);
+    if (value !== "") {
+      const newTourList = tourData.filter((tour) => {
+        return Object.values(tour)
+          .join(" ")
+          .toLowerCase()
+          .includes(value.toLowerCase());
+      });
+      console.log(newTourList); // successfully filtered!!!!
+      setTourData(newTourList); // filters successfully and paginates, but then the useEffect re-renders back to normal right aftwerwards..
+    }
+  };
 
   const handleClickTrue = (id) => {
     const videoClickIndex = playObjects.findIndex((play) => play.id === id);
@@ -94,7 +109,6 @@ export default function PageTest(props) {
   };
 
   useEffect(() => {
-    // setSearchData(search);
     console.log(props);
     let numberOfTours = 0;
     const renderTours = async () => {
@@ -119,11 +133,12 @@ export default function PageTest(props) {
         .catch((error) => console.log(error));
     };
     renderTours();
-  }, [props]); // need to monitor filterResults or search, or something, put it as a param here, I guess
+    searchHandler(props.search);
+  }, [props]); // need to monitor props state for filtering?
 
   const count = Math.ceil(tourData.length / perPage);
-  const data = usePagination(tourData, perPage); // perhaps change tourdata when searching
-  const dataNumberArray = Array.from(Array(data.currentData().length).keys()); // this should be deleted
+  const data = usePagination(tourData, perPage); // change tourData to something else, so it doesn't change on re-render
+  // const dataNumberArray = Array.from(Array(data.currentData().length).keys()); // this should be deleted
 
   const handleChange = (e, p) => {
     setPage(p);
@@ -156,131 +171,95 @@ export default function PageTest(props) {
           }}
         />
         <Grid sx={{ flexGrow: 1 }} container spacing={7}>
-          {data
+          {/* {data
             .currentData()
             .filter((tour) => {
-              if (props.value === "") {
+              if (props.search === "") {
+                // edit this. maybe there's a string empty extension method?
                 return tour;
               }
               if (
-                tour.title.toLowerCase().includes(props.value) ||
-                tour.description.toLowerCase().includes(props.value)
+                tour.title.toLowerCase().includes(props.search) ||
+                tour.description.toLowerCase().includes(props.search)
               ) {
                 return tour;
               }
               return data.currentData();
             })
-            .map((tour) => (
-              // {data.currentData().map((tour) => (
-              <Tilt style={{}}>
-                <Card
-                  elevation={5}
+            .map((tour) => ( */}
+          {data.currentData().map((tour) => (
+            <Tilt style={{}}>
+              <Card
+                elevation={5}
+                sx={{
+                  position: "relative",
+                  maxWidth: 500,
+                  width: 400,
+                  height: "400px",
+                  margin: 1,
+                  cursor: "pointer",
+                  "&:hover": {
+                    transform: "scale(1.1)",
+                    transformOrigin: "center",
+                    transition: "transform 330ms ease-in-out",
+                  },
+                }}
+                onMouseEnter={() => togglePlay(tour.id)}
+                onMouseLeave={() => togglePause(tour.id)}
+              >
+                <CardMedia
+                  height="200"
                   sx={{
-                    position: "relative",
-                    maxWidth: 500,
-                    width: 400,
-                    height: "400px",
-                    margin: 1,
-                    cursor: "pointer",
-                    "&:hover": {
-                      transform: "scale(1.1)",
-                      transformOrigin: "center",
-                      transition: "transform 330ms ease-in-out",
-                    },
+                    transformStyle: "preserve-3d",
+                    transform: "translateZ(60px)",
                   }}
-                  onMouseEnter={() => togglePlay(tour.id)}
-                  onMouseLeave={() => togglePause(tour.id)}
                 >
-                  <CardMedia
-                    height="200"
-                    sx={{
-                      transformStyle: "preserve-3d",
-                      transform: "translateZ(60px)",
+                  <header
+                    style={{
+                      position: "absolute",
+                      width: "100%",
+                      height: "18%",
+                      background: "black",
+                      color: "black",
+                      top: 0,
                     }}
                   >
-                    <header
-                      style={{
-                        position: "absolute",
-                        width: "100%",
-                        height: "18%",
-                        background: "black",
-                        color: "black",
-                        top: 0,
-                      }}
-                    >
-                      Text
-                    </header>
-                    <ReactPlayer
-                      url={videoByTourLocation(tour.location)}
-                      playing={videoIsPlaying(tour.id)}
-                      volume="0"
-                      muted
-                      width="auto"
-                      height="300px"
-                    />
-                    <footer
-                      style={{
-                        position: "absolute",
-                        width: "100%",
-                        height: "18%",
-                        background: "black",
-                        bottom: 0,
-                        color: "black",
-                      }}
-                    >
-                      Text
-                    </footer>
-                  </CardMedia>
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {tour.title}
-                    </Typography>
-                    <Tooltip title="add to favorites">
-                      {isClicked(tour.id) ? (
-                        <FavoriteIcon
-                          onClick={() => handleClickFalse(tour.id)}
-                          sx={{
-                            color: "white",
-                            opacity: "40%",
-                            position: "absolute",
-                            left: 330,
-                            bottom: 350,
-                            fontSize: 50,
-                            "&:hover": {
-                              color: "white",
-                              backgroundColor: "grey",
-                              cursor: "pointer",
-                              opacity: "100%",
-                            },
-                          }}
-                        />
-                      ) : (
-                        <FavoriteBorderSharpIcon
-                          onClick={() => handleClickTrue(tour.id)}
-                          sx={{
-                            color: "white",
-                            opacity: "40%",
-                            position: "absolute",
-                            left: 330,
-                            bottom: 350,
-                            fontSize: 50,
-                            "&:hover": {
-                              color: "white",
-                              backgroundColor: "grey",
-                              cursor: "pointer",
-                              opacity: "100%",
-                            },
-                          }}
-                        />
-                      )}
-                    </Tooltip>
-                    <Tooltip title="add to cart">
-                      <AddShoppingCartIcon
+                    Text
+                  </header>
+                  <ReactPlayer
+                    url={videoByTourLocation(tour.location)}
+                    playing={videoIsPlaying(tour.id)}
+                    volume="0"
+                    muted
+                    width="auto"
+                    height="300px"
+                  />
+                  <footer
+                    style={{
+                      position: "absolute",
+                      width: "100%",
+                      height: "18%",
+                      background: "black",
+                      bottom: 0,
+                      color: "black",
+                    }}
+                  >
+                    Text
+                  </footer>
+                </CardMedia>
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {tour.title}
+                  </Typography>
+                  <Tooltip title="add to favorites">
+                    {isClicked(tour.id) ? (
+                      <FavoriteIcon
+                        onClick={() => handleClickFalse(tour.id)}
                         sx={{
                           color: "white",
                           opacity: "40%",
                           position: "absolute",
-                          right: 330,
+                          left: 330,
                           bottom: 350,
                           fontSize: 50,
                           "&:hover": {
@@ -291,24 +270,61 @@ export default function PageTest(props) {
                           },
                         }}
                       />
-                    </Tooltip>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      size="small"
+                    ) : (
+                      <FavoriteBorderSharpIcon
+                        onClick={() => handleClickTrue(tour.id)}
+                        sx={{
+                          color: "white",
+                          opacity: "40%",
+                          position: "absolute",
+                          left: 330,
+                          bottom: 350,
+                          fontSize: 50,
+                          "&:hover": {
+                            color: "white",
+                            backgroundColor: "grey",
+                            cursor: "pointer",
+                            opacity: "100%",
+                          },
+                        }}
+                      />
+                    )}
+                  </Tooltip>
+                  <Tooltip title="add to cart">
+                    <AddShoppingCartIcon
                       sx={{
-                        position: "absolute",
-                        right: 140,
-                        bottom: "20px",
                         color: "white",
+                        opacity: "40%",
+                        position: "absolute",
+                        right: 330,
+                        bottom: 350,
+                        fontSize: 50,
+                        "&:hover": {
+                          color: "white",
+                          backgroundColor: "grey",
+                          cursor: "pointer",
+                          opacity: "100%",
+                        },
                       }}
-                    >
-                      Find Out More
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Tilt>
-            ))}
+                    />
+                  </Tooltip>
+                </CardContent>
+                <CardActions>
+                  <Button
+                    size="small"
+                    sx={{
+                      position: "absolute",
+                      right: 140,
+                      bottom: "20px",
+                      color: "white",
+                    }}
+                  >
+                    Find Out More
+                  </Button>
+                </CardActions>
+              </Card>
+            </Tilt>
+          ))}
         </Grid>
       </Stack>
     </Box>
