@@ -11,7 +11,8 @@ import Link from "@mui/material/Link";
 import PageTest from "../pagination/Pagetest";
 
 export default function SearchBar() {
-  // re-render paginated results through passing data via map []
+  // Don't make it possible to hit enter for input box on search/prevent input expansion []
+  // make it so that enter triggers search, function []
 
   const [sentSearch, setSentSearch] = useState({ value: "" });
 

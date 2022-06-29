@@ -29,15 +29,20 @@ export default function PageTest(props) {
   const [tourData, setTourData] = useState([]);
   const [playObjects, setPlayObjects] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  // use ternary operator to change value of searchResults??
+  // monitor searchResults in useEffect function? Set default to tourData, as well.
+  // use DEBUGGER []
 
-  // Don't make it possible to hit enter for input box on search/prevent input expansion []
-  // make it so that enter triggers search, function []
+  // const [searchValue, setSearchValue] = useState("");
+
   // sanitize the value so that only one space in between characters is allowed (string replace?) []
   // add filter functionality through a modal or menu, or something []
 
+  // constantly re-rendering based on useEffect, which looks nice, but the console is clogging up. fix it []
+  // re-renders based on spaces, change that, too []
+
   const searchHandler = (value) => {
-    console.log(value);
-    if (value !== "") {
+    if (value.trim() !== "") {
       const newTourList = tourData.filter((tour) => {
         return Object.values(tour)
           .join(" ")
@@ -138,14 +143,12 @@ export default function PageTest(props) {
         .catch((error) => console.log(error));
     };
     renderTours();
+    // setSearchValue(props.search);
     searchHandler(props.search);
-  }, [props]); // need to monitor props state for filtering?
+  }, [props]); // deleted searchValue
 
-  const count = Math.ceil(searchResults.length / perPage); // change to searchResults.length?
-  // const data = usePagination(tourData, perPage);
+  const count = Math.ceil(searchResults.length / perPage); // conditionally change value, based sentSearch???
   const data = usePagination(searchResults, perPage);
-  // change tourData to something else, so it doesn't change on re-render SEARCH RESULTS
-  // const dataNumberArray = Array.from(Array(data.currentData().length).keys()); // this should be deleted
 
   const handleChange = (e, p) => {
     setPage(p);
