@@ -30,7 +30,10 @@ export default function PageTest(props) {
   const [playObjects, setPlayObjects] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
 
-  // LOOK AT SEARCH HANDLER
+  // Don't make it possible to hit enter for input box on search/prevent input expansion []
+  // make it so that enter triggers search, function []
+  // sanitize the value so that only one space in between characters is allowed (string replace?) []
+  // add filter functionality through a modal or menu, or something []
 
   const searchHandler = (value) => {
     console.log(value);
@@ -41,8 +44,10 @@ export default function PageTest(props) {
           .toLowerCase()
           .includes(value.toLowerCase());
       });
-      console.log(newTourList); // successfully filtered!!!!
-      setTourData(newTourList); // filters successfully and paginates, but then the useEffect re-renders back to normal right aftwerwards..
+      console.log(newTourList);
+      setSearchResults(newTourList);
+    } else {
+      setSearchResults(tourData);
     }
   };
 
@@ -136,8 +141,10 @@ export default function PageTest(props) {
     searchHandler(props.search);
   }, [props]); // need to monitor props state for filtering?
 
-  const count = Math.ceil(tourData.length / perPage);
-  const data = usePagination(tourData, perPage); // change tourData to something else, so it doesn't change on re-render
+  const count = Math.ceil(searchResults.length / perPage); // change to searchResults.length?
+  // const data = usePagination(tourData, perPage);
+  const data = usePagination(searchResults, perPage);
+  // change tourData to something else, so it doesn't change on re-render SEARCH RESULTS
   // const dataNumberArray = Array.from(Array(data.currentData().length).keys()); // this should be deleted
 
   const handleChange = (e, p) => {
@@ -171,22 +178,6 @@ export default function PageTest(props) {
           }}
         />
         <Grid sx={{ flexGrow: 1 }} container spacing={7}>
-          {/* {data
-            .currentData()
-            .filter((tour) => {
-              if (props.search === "") {
-                // edit this. maybe there's a string empty extension method?
-                return tour;
-              }
-              if (
-                tour.title.toLowerCase().includes(props.search) ||
-                tour.description.toLowerCase().includes(props.search)
-              ) {
-                return tour;
-              }
-              return data.currentData();
-            })
-            .map((tour) => ( */}
           {data.currentData().map((tour) => (
             <Tilt style={{}}>
               <Card
