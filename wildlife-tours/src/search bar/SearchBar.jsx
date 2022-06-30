@@ -35,6 +35,11 @@ export default function SearchBar() {
     setSearchValue(searchValue);
   }, [searchValue]);
 
+  // useEffect(() => {
+  //   setSentSearch((prevState) => ({ ...prevState, value: "" }));
+  //   search();
+  // }, []);
+
   return (
     <Box
       component="form"

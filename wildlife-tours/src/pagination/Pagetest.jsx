@@ -27,13 +27,13 @@ export default function PageTest(props) {
   const [perPage, setPerPage] = useState(3);
   const [loading, setLoading] = useState(false); // this will be used for loading spinner, later
   const [tourData, setTourData] = useState([]);
+  // const [tourData, setTourData] = useState([]);
   const [playObjects, setPlayObjects] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState([]); // replaced empty array with tourData
+  const [searchValue, setSearchValue] = useState("");
   // use ternary operator to change value of searchResults??
   // monitor searchResults in useEffect function? Set default to tourData, as well.
   // use DEBUGGER []
-
-  // const [searchValue, setSearchValue] = useState("");
 
   // sanitize the value so that only one space in between characters is allowed (string replace?) []
   // add filter functionality through a modal or menu, or something []
@@ -43,8 +43,8 @@ export default function PageTest(props) {
 
   const searchHandler = (value) => {
     if (value.trim() !== "") {
-      const newTourList = tourData.filter((tour) => {
-        return Object.values(tour)
+      const newTourList = tourData.tours.filter((tour) => {
+        return Object.values(tour) // I'm not sure if I am getting the right values now, because of the tours property
           .join(" ")
           .toLowerCase()
           .includes(value.toLowerCase());
@@ -52,7 +52,7 @@ export default function PageTest(props) {
       console.log(newTourList);
       setSearchResults(newTourList);
     } else {
-      setSearchResults(tourData);
+      setSearchResults(tourData); // this is empty to begin with
     }
   };
 
@@ -133,21 +133,23 @@ export default function PageTest(props) {
           throw new Error("Oops! Something went wrong!");
         })
         .then((responseData) => {
-          setLoading(false);
-          setTourData(responseData);
+          const newTourData = responseData; // capturing new value and setting it
+          setTourData(newTourData);
           console.log(responseData);
           numberOfTours = responseData.length;
           const numberArray = Array.from(Array(numberOfTours).keys());
           createVideoPlayingObjects(numberOfTours);
+          setLoading(false);
         })
         .catch((error) => console.log(error));
     };
     renderTours();
-    // setSearchValue(props.search);
-    searchHandler(props.search);
-  }, [props]); // deleted searchValue
+    setSearchValue(props.search);
+    searchHandler(searchValue);
+  }, [props, searchValue]);
 
-  const count = Math.ceil(searchResults.length / perPage); // conditionally change value, based sentSearch???
+  const count = Math.ceil(searchResults.length / perPage); // conditionally change value by setting it equal to state, which changes based on conditional
+  // conditionally change value, based sentSearch???
   const data = usePagination(searchResults, perPage);
 
   const handleChange = (e, p) => {
