@@ -14,6 +14,10 @@ export default function SearchBar() {
   // Don't make it possible to hit enter for input box on search/prevent input expansion []
   // make it so that enter triggers search, function []
 
+  // DEBUG THIS FILE
+
+  // follow pagination tutorial search again, and use useRef for input instead of state???? []
+
   const [sentSearch, setSentSearch] = useState({ value: "" });
 
   const [searchValue, setSearchValue] = useState({
@@ -33,12 +37,7 @@ export default function SearchBar() {
 
   useEffect(() => {
     setSearchValue(searchValue);
-  }, [searchValue]);
-
-  // useEffect(() => {
-  //   setSentSearch((prevState) => ({ ...prevState, value: "" }));
-  //   search();
-  // }, []);
+  }, [searchValue]); // fiddle around with useEffect and setSearch/sentSearch??? []
 
   return (
     <Box
