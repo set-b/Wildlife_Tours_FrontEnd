@@ -25,7 +25,7 @@ import { videoLinks } from "../assets/videoLinks";
 export default function PageTest(props) {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(3);
-  const [loading, setLoading] = useState(false); // this will be used for loading spinner, later
+  const [loading, setLoading] = useState(true); // this will be used for loading spinner, later
   const [tourData, setTourData] = useState({ list: [] });
   const [playObjects, setPlayObjects] = useState([]);
   const [searchResults, setSearchResults] = useState({ list: [] }); // replaced empty array with tourData
@@ -42,6 +42,7 @@ export default function PageTest(props) {
   // const tourRef = useRef();
 
   const searchHandler = (value) => {
+    console.log(value);
     if (value.trim() !== "") {
       const newTourList = tourData.list.filter((tour) => {
         return Object.values(tour) // I'm not sure if I am getting the right values now, because of the tours property
@@ -55,6 +56,8 @@ export default function PageTest(props) {
       setSearchResults((prevState) => ({ ...prevState, list: tourData.list })); // this is empty to begin with; useRef experiment
     }
   };
+
+  // high latency call type before fetch resolve
 
   const handleClickTrue = (id) => {
     const videoClickIndex = playObjects.findIndex((play) => play.id === id);
@@ -120,6 +123,7 @@ export default function PageTest(props) {
 
   useEffect(() => {
     // setLoading(true);
+    const isCancelled = false;
     console.log(props);
     let numberOfTours = 0;
     const renderTours = async () => {
@@ -134,6 +138,7 @@ export default function PageTest(props) {
           throw new Error("Oops! Something went wrong!");
         })
         .then((responseData) => {
+          // if (!isCancelled) {
           const newTourData = responseData;
           // tourRef.current = newTourData; // capturing new value and setting it; not working
           setTourData((prevState) => ({ ...prevState, list: newTourData }));
@@ -141,17 +146,22 @@ export default function PageTest(props) {
           numberOfTours = responseData.length;
           const numberArray = Array.from(Array(numberOfTours).keys());
           createVideoPlayingObjects(numberOfTours);
+          // }
           // setLoading(false);
         })
         .then(setLoading(false))
         .catch((error) => console.log(error));
     };
     renderTours();
-  }, []);
+    searchHandler(props.search);
+    // return () => {
+    //   isCancelled = true;
+    // };
+  }, [props]);
 
   useEffect(() => {
     setSearchValue(props.search);
-    searchHandler(searchValue);
+    // searchHandler(searchValue);
   }, [props, searchValue]);
 
   const count = Math.ceil(searchResults.list.length / perPage); // conditionally change value by setting it equal to state, which changes based on conditional
